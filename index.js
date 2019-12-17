@@ -1,34 +1,57 @@
+ const fs = require('fs');
+ const arg = require('minimist')(process.argv.slice(2));
 const http = require('http');
-const url = require('url');
-const fs = require('fs');
 
-const sendData = (fileName,res) =>{
-   fs.readFile(`${fileName}.html`,'utf-8',(err,data) =>{
-      try{
-         if(err){
-            throw err
-         }
-      }catch (err){
-         console.log(err.name),
-         console.log(err.message)
+
+// function getFileContent(fileName){
+//   fs.readFile(`./${fileName}`,'utf-8',(err, data) => {
+//     if(err){
+//       console.log(`${fileName}.txt not found`);
+//     }else{
+//       console.log(data);
+//     }
+// });
+// }
+
+
+// switch(arg.f || arg.file || arg.c || arg.css){
+//     case arg.f:getFileContent(`${arg.f}.txt`)
+//     break;
+//     case arg.file: getFileContent(`${arg.file}.txt`)
+//     break;
+//     case arg.c:getFileContent(`${arg.c}.css`)
+//     break;
+//     case arg.css: getFileContent(`${arg.css}.css`)
+//     break;
+// }
+
+
+
+http.createServer((req, res) =>{
+  res.writeHead(200,{
+      'Content-Type': 'text/html'
+  });
+
+  function getFileContent(fileName){
+    fs.readFile(`./${fileName}`,'utf-8',(err, data) => {
+      if(err){
+        console.log(`${fileName} not found`);
+      }else{
+        console.log(data);
       }
+  });
+  }
+  
+  
+  switch(arg.e || arg.file){
+      case 'hello': getFileContent(`${arg.fileName}.txt`)
+      break;
+      case 'main':getFileContent(`${arg.fileName}.html`)
+      break;
+      
+      
+  }
+  res.end();
 
-      res.end(data)
-   });
-};
+}).listen(8080)
 
-http.createServer((req,res) =>{
-   res.writeHead(200);
-
-   const {query:{page}} = url.parse(req.url,true);
-
-   switch(page){
-      case 'home':sendData('index',res);break;
-      case 'contact':sendData('contact',res);break;
-      case 'news':sendData('news',res);break;
-      default:sendData('404',res);break;
-   }
-}).listen(3001);
-
-
- 
