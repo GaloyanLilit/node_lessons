@@ -1,20 +1,25 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-
-  res.render('home',{
-
-    name:'John'
-  });
+router.get('/', (req, res, next) => {
+  res.render('index');
 });
 
-router.get('/contact', function(req, res, next) {
+router.get('/contact', (req, res, next) => {
   res.render('contact');
 });
 
-router.get('/about', function(req, res, next) {
+router.get('/about', (req, res, next) => {
   res.render('about');
 });
+
+router.get('/recipes', (req, res, next) => {
+  res.render('recipes');
+});
+
+router.get('/recipesingle', (req, res, next) => {
+  res.render('recipesingle');
+});
+
 module.exports = router;
