@@ -1,25 +1,22 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
+const { isEmail } = require('../utils/validate');
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
+router.get('/', function(req, res, next) {
+ 
+  
   res.render('index');
 });
 
-router.get('/contact', (req, res, next) => {
-  res.render('contact');
-});
+router.post('/', function(req, res, next) {
+  if(!req.body) return res.sendStatus(400)
+  console.log('req.body');
 
-router.get('/about', (req, res, next) => {
-  res.render('about');
-});
-
-router.get('/recipes', (req, res, next) => {
-  res.render('recipes');
-});
-
-router.get('/recipesingle', (req, res, next) => {
-  res.render('recipesingle');
+  
+  
+  
+  res.render('test', {data: req.body});
 });
 
 module.exports = router;
